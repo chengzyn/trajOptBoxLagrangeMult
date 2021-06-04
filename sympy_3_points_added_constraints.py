@@ -17,12 +17,12 @@ def sympy_3_points_added_constraints():
     # constraint functions
     g0 = x0
     g1 = x1 - x0 - 0.5 * h * (v1 + v0)
-    g2 = x2 - 1
-    g3 = v0
-    g4 = v1 - v0 - 0.5 * h * (u1 + u0)
-    g5 = v2
-    g6 = x2 - x1 - 0.5 * h * (v2 + v1)
-    g7 = v2 - v1 - 0.5 * h * (u2 + u1)
+    g2 = x2 - x1 - 0.5 * h * (v2 + v1)
+    g3 = x2 - 1
+    g4 = v0
+    g5 = v1 - v0 - 0.5 * h * (u1 + u0)
+    g6 = v2 - v1 - 0.5 * h * (u2 + u1)
+    g7 = v2
 
     # Lagrangian function
     L = f - l0 * g0 - l1 * g1 - l2 * g2 - l3 * g3 - l4 * g4 - l5 * g5 - l6 * g6 - l7 * g7
