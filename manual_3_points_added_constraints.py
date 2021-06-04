@@ -8,8 +8,6 @@ def manual_3_points_added_constraints():
     """
     N = 3
     M = 17  # number of variables
-    assert type(N) is int
-    assert N >= 3
     A = np.zeros((M, M))  # matrix containing the coefficients of dL/dz
     final_time = 1
     h = final_time / (N - 1)
@@ -19,9 +17,10 @@ def manual_3_points_added_constraints():
     A[0, 10] = 1
 
     A[1, 10] = -1
-    A[1, 15] = -1
+    A[1, 15] = 1
 
     A[2, 11] = -1
+    A[2, 15] = -1
 
     A[3, 10] = 0.5 * h
     A[3, 12] = -1
@@ -77,11 +76,12 @@ def manual_3_points_added_constraints():
     b = np.zeros((M, 1))
     b[11, 0] = -1
 
-    #x = np.linalg.solve(A, b) # singular matrix, hence cannot use this to solve
-    Apinv = np.linalg.pinv(A)
-    x = Apinv.dot(b)
+    x = np.linalg.solve(A, b)  # singular matrix, hence cannot use this to solve
+
     print("computed x:", np.transpose(x[0:3]), "\nanalytical x:", x_analytic(t_vec))
-    print("computed u:", np.transpose(x[6:9]), "\nanalytical x:", u_analytic(t_vec))
+    print("computed u:", np.transpose(x[6:9]), "\nanalytical u:", u_analytic(t_vec))
+    b_computed = A.dot(x)
+    print(sum(b_computed == b) == M)
 
     # Print out A
     r_idx = np.arange(0, M)  # this gives a rank 0 array
@@ -90,8 +90,8 @@ def manual_3_points_added_constraints():
     c_idx = np.reshape(c_idx, (1, -1))  # this gives a rank 1 row array
     c_idx = c_idx - 1
     c_idx[0, 0] = 0
-    A1 = np.concatenate((r_idx, A), axis=1)
-    A2 = np.concatenate((c_idx, A1), axis=0)
+    A1 = np.concatenate((r_idx, A), axis=1)  # A with row indices appended
+    A2 = np.concatenate((c_idx, A1), axis=0)  # A with col indices appended
     mat_print(A2)
 
 
