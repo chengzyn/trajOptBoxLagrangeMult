@@ -3,9 +3,9 @@ from sympy import *
 
 def sympy_3_points_added_constraints():
     # declare all the variables symbolically
-    u0, u1, u2 = symbols('u0 u1 u2')
     x0, x1, x2 = symbols('x0 x1 x2')
     v0, v1, v2 = symbols('v0 v1 v2')
+    u0, u1, u2 = symbols('u0 u1 u2')
     l0, l1, l2, l3, l4, l5, l6, l7 = symbols('l0 l1 l2 l3 l4 l5 l6 l7')
 
     # timestep
@@ -13,6 +13,7 @@ def sympy_3_points_added_constraints():
 
     # objective function
     f = 0.5 * h * u0 ** 2 + h * u1 ** 2 + 0.5 * h * u2 ** 2
+    print(f'f = {f}')
 
     # constraint functions
     g0 = x0
