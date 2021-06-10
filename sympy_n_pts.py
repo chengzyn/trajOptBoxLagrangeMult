@@ -51,15 +51,20 @@ def sympy_n_pts(N):
     # differentials
     z = x + v + u + l
     dL = [diff(L, i) for i in z]
+
+    # Solve the set of equations
     z_comp = linsolve(dL, tuple(z))
     x_comp = z_comp.args[0][0:N]
     v_comp = z_comp.args[0][N:2 * N]
     u_comp = z_comp.args[0][2 * N:3 * N]
 
-    return x_comp, v_comp, u_comp, x_analytic(t_vec), u_analytic(t_vec), t_vec, N
+    # Saving the set of linear equations to a matrix
+    A, b = linear_eq_to_matrix(dL, z)
+
+    return x_comp, v_comp, u_comp, x_analytic(t_vec), u_analytic(t_vec), t_vec, N, A, b
 
 
-def nice_plot(xc, vc, uc, xa, ua, t, n):
+def nice_plot(xc, vc, uc, xa, ua, t, n, A, b):
     """Plots the results"""
     mse_x = mean_squared_error(xa, xc)
     mse_u = mean_squared_error(ua, uc)
@@ -80,6 +85,11 @@ def nice_plot(xc, vc, uc, xa, ua, t, n):
     plt.savefig(f'n_is_{n}.png', dpi=300)  # must be before show()
     plt.show()
 
+def print_A_and_b(xc, vc, uc, xa, ua, t, n, A, b):
+    print(f'A: {A}')
+    print(f'b: {b}')
 
 if __name__ == '__main__':
-    nice_plot(*sympy_n_pts(51))
+    N = 3
+    nice_plot(*sympy_n_pts(N))
+    print_A_and_b(*sympy_n_pts(N))
