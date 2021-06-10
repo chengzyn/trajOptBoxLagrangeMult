@@ -85,9 +85,11 @@ def nice_plot(xc, vc, uc, xa, ua, t, n, A, b):
     plt.savefig(f'n_is_{n}.png', dpi=300)  # must be before show()
     plt.show()
 
+
 def print_A_and_b(xc, vc, uc, xa, ua, t, n, A, b):
     print(f'A: {A}')
     print(f'b: {b}')
+
 
 if __name__ == '__main__':
     N = 3
